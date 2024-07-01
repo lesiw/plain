@@ -20,7 +20,7 @@ documentation][migrate].
 
 ## Configuration
 
-Use the [libpq environment variables][envar] to configure your database
+Use the [libpq environment variables][envars] to configure your database
 connection. These are automatically understood by `pgx`.
 
 ## Usage
