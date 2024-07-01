@@ -33,14 +33,11 @@ Add this to the top of your application's `main.go`:
 
 Run `go generate`.
 
-Create a new context: `ctx := context.Background()`.
+Use `plain.ConnectPgx(context.Context) *pgxPool.pool` to establish a connection
+to the database.
 
-Use `plain.ConnectPgx(ctx, migrate)` to establish a connection to the database.
-`migrate` is an auto-generated function. `ConnectPgx` returns a `pgxpool.Pool`
-to use in the rest of your application.
-
-Import the statements generated in `internal/stmt` as needed to use the embedded
-sql files.
+Import `internal/stmt` as access the SQL statements written in
+`sql/statements`.
 
 ## Example
 

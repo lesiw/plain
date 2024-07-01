@@ -15,6 +15,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+var MigrationFS fs.FS
+
 // ConnectPgx connects to the database.
 //
 // Database connection information should be specified by setting standard
@@ -22,8 +24,7 @@ import (
 // PGDATABASE.
 //
 // Blocks until a connection has been achieved to prevent application thrashing.
-func ConnectPgx(ctx context.Context, migrate func() error,
-) (pool *pgxpool.Pool) {
+func ConnectPgx(ctx context.Context) (pool *pgxpool.Pool) {
 	var err error
 	for {
 		pool, err = pgxpool.New(ctx, "")
@@ -35,7 +36,7 @@ func ConnectPgx(ctx context.Context, migrate func() error,
 		break
 	}
 	for {
-		if err := migrate(); err != nil {
+		if err := migrateUp(); err != nil {
 			slog.Info("failed to migrate db", "err", err)
 			time.Sleep(10 * time.Second)
 			continue
@@ -46,9 +47,8 @@ func ConnectPgx(ctx context.Context, migrate func() error,
 	return
 }
 
-// Migrate executes a migration using the provided fs.FS.
-func Migrate(fs fs.FS) error {
-	src, err := iofs.New(fs, "sql/migrations")
+func migrateUp() error {
+	src, err := iofs.New(MigrationFS, "sql/migrations")
 	if err != nil {
 		return fmt.Errorf("failed to create iofs: %w", err)
 	}
