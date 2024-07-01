@@ -36,8 +36,7 @@ Run `go generate`.
 Use `plain.ConnectPgx(context.Context) *pgxPool.pool` to establish a connection
 to the database.
 
-Import `internal/stmt` as access the SQL statements written in
-`sql/statements`.
+Import `internal/stmt` to access the SQL statements written in `sql/statements`.
 
 ## Example
 
