@@ -28,7 +28,7 @@ func ConnectPgx(ctx context.Context, migrate func() error,
 	for {
 		pool, err = pgxpool.New(ctx, "")
 		if err != nil {
-			slog.Info("failed to connect to db: %s", err)
+			slog.Info("failed to connect to db", "err", err)
 			time.Sleep(time.Second)
 			continue
 		}
@@ -36,12 +36,14 @@ func ConnectPgx(ctx context.Context, migrate func() error,
 	}
 	for {
 		if err := migrate(); err != nil {
-			slog.Info("failed to migrate db: %s", err)
+			slog.Info("failed to migrate db", "err", err)
 			time.Sleep(10 * time.Second)
 			continue
 		}
-		return
+		break
 	}
+	slog.Info("established connection to db")
+	return
 }
 
 // Migrate executes a migration using the provided fs.FS.
