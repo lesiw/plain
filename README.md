@@ -1,5 +1,7 @@
 # lesiw.io/plain
 
+[![Go Reference](https://pkg.go.dev/badge/lesiw.io/plain.svg)](https://pkg.go.dev/lesiw.io/plain)
+
 A micro-framework for building applications with plain, simple, SQL.
 
 <p align="center">
