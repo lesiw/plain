@@ -23,7 +23,8 @@ var MigrationFS fs.FS
 // PostgreSQL environment variables, e.g. PGHOST, PGUSER, PGPASSWORD,
 // PGDATABASE.
 //
-// Blocks until a connection has been achieved to prevent application thrashing.
+// Blocks until a connection has been achieved to prevent application
+// thrashing.
 func ConnectPgx(ctx context.Context) (pool *pgxpool.Pool) {
 	var err error
 	for {
