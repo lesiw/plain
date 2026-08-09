@@ -69,7 +69,7 @@ func walkFunc(path string, d os.DirEntry, err error) error {
 	if err != nil {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
-	b := &strings.Builder{}
+	b := new(strings.Builder)
 	_, _ = io.Copy(b, f)
 	_, _ = file.WriteString(fmt.Sprintf(
 		"\nconst %s = `\n%s`\n",
